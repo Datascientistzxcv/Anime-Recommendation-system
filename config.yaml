@@ -1,0 +1,35 @@
+preprocessing:
+  Input_file_directory_path: '/home/jovyan/getty/deep-semantic-language-model/data/cleaned_agg_0614/all'
+  Output_directory_path: './data'
+  inputpath_origin: 's3'
+  aws_secret: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+  aws_id: 'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+  bucket_name: 'emr-s3sink'
+  folder_name: 'parquet-files'
+
+
+training:
+  multilingual: True
+  inputpath_origin: 'emr'
+  training_data_path: './data/bert_training_pairs'
+  test_data_path: './data/bert_test_pairs'
+  training_data_emrpath: 'file:///home/hadoop/getty/data/bert_training_pairs'
+  test_data_emrpath: 'file:///home/hadoop/getty/data/bert_test_pairs'
+  num_val_examples: 10_000
+  model_save_path: './models'
+  trained_model_path: ''
+  batch_size: 45
+  num_epochs: 1
+  evaluation_steps: 10_000
+  save_best_model: True
+  checkpoint_save_total_limit: 1
+  checkpoint_save_steps: 10_000
+  gpu_id: 1
+  multi_gpus: False
+  steps_per_epoch: 0
+  spark_master_config: 'local[*]'
+  workers_count: 6
+  spark_AppName: 'getty'
+  spark_executor_memory: '10gb'
+  spark_driver_memory: '10g'
+  petastorm_cashe_path: 'file:///tmp/petastorm/cache'

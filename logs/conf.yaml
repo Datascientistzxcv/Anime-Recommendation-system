@@ -1,0 +1,54 @@
+version: 1
+formatters:
+  simple:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  detail:
+    format: '%(asctime)s - %(levelname)s - File: %(filename)s - %(funcName)s() - Line: %(lineno)d -  %(message)s'
+
+loggers:
+  all:
+    handlers: [ all ]
+    propagate: true
+  warn:
+    handlers: [ warn ]
+    propagate: true
+  network:
+    handlers: [ network ]
+    propagate: false
+    qualname: network
+  pipeline:
+    handlers: [ all ]
+    propagate: true
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+  all:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: DEBUG
+    formatter: simple
+    when: W0
+    backupCount: 4
+    filename: logs/all.log
+  warn:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: WARNING
+    formatter: detail
+    when: W0
+    backupCount: 4
+    filename: logs/warn.log
+  network:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: DEBUG
+    formatter: detail
+    when: W0
+    backupCount: 4
+    filename: logs/network.log
+
+root:
+  level: DEBUG
+  handlers: [ console, all, warn ]
+  propagate: true
